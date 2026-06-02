@@ -1,7 +1,7 @@
-const PRODUCTOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT01W_sdVzCDrkICZ_oMsrvOfj2_nT5xFAH-RWqrVESTv99pUQd9U7EUOZIEmJQ7O2Q9GH6wW_xMHng/pub?gid=0&single=true&output=csv";
-const APPS_SCRIPT_PEDIDOS_URL = "https://script.google.com/macros/s/AKfycbzZe6FTw16uxzEyvFH7r8ie5CjDRUGDEcmzvJwGUNC-g_dOMikKfep_zubZeGGSSqGCXg/exec";
+const PRODUCTOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_p_7vJVWA2BQAO1j6YINDABe2lfhHSSKJDaJui9DMmld_UFhD26gKWZdIuhJa1VIYrBUbbfmUJ5jI/pub?gid=0&single=true&output=csv";
+const APPS_SCRIPT_PEDIDOS_URL = "https://script.google.com/macros/s/AKfycbxKHjptEll_39WW41GX48V3l1hCh3dzHcMbPQfgtvEIOQmvvq2KVEV0llYE9lQhYBje/exec";
 const WHATSAPP_NUMBER = "5493875048697";
-const ADEREZOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT01W_sdVzCDrkICZ_oMsrvOfj2_nT5xFAH-RWqrVESTv99pUQd9U7EUOZIEmJQ7O2Q9GH6wW_xMHng/pub?gid=248250282&single=true&output=csv";
+const ADEREZOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_p_7vJVWA2BQAO1j6YINDABe2lfhHSSKJDaJui9DMmld_UFhD26gKWZdIuhJa1VIYrBUbbfmUJ5jI/pub?gid=248250282&single=true&output=csv";
 const ALIAS_TRANSFERENCIA = "marvin.craft.ok";
 
 let productos = [], carrito = [], currentCategory = "all", aderezosDisponibles = ["Mayonesa", "Mostaza", "Kétchup", "Barbacoa", "Salsa Picante"], isSubmitting = false, currentLang = "es";
@@ -21,28 +21,28 @@ function getProductDescription(prod) {
 const TRANSLATIONS = {
   es: {
     tagline: "Marvin Craft Destileria & Bar", btnUltimoPedido: "📋 Último pedido", btnMisPedidos: "📜 Mis pedidos", productosLabel: "productos", verCarrito: "Ver carrito", cargandoProductos: "Cargando productos...",
-    footerTagline: "Marvin Craft Destileria & Bar.", footerHorario: "Horarios", footerLunesVier: "Mar – Vie: 12:00 – 00:00", footerSabDom: "Sáb – Dom: 12:00 – 01:00", footerMesa: "🍽️ Pedí desde tu mesa",
+    footerTagline: "Marvin Craft Destileria & Bar.", footerHorario: "Horarios", footerLunesVier: "Mar – Vie: 12:00 – 00:00", footerSabDom: "Sáb – Dom: 12:00 – 01:00", footerMesa: "🍸 Pedí desde tu mesa",
     footerSeguinos: "Seguinos", footerSeguro: "Pedí con confianza · Servicio en mesa", tuCarrito: "Tu carrito", total: "Total", finalizarPedido: "Finalizar pedido",
     datosPedido: "Pedido desde tu mesa", secDatosCliente: "Datos del cliente", labelNombre: "Nombre completo *", placeholderNombre: "Ej: Ana González", labelTelefono: "Teléfono *", placeholderTelefono: "11 2345 6789",
     secMesa: "Ubicación en el local", labelMesa: "Número de mesa *", placeholderMesa: "Ej: Mesa 5",
     secAderezos: "Aderezos adicionales", opcional: "opcional", secMetodoPago: "Método de pago", efectivo: "Efectivo (en el local)", transferencia: "Transferencia bancaria",
     aliasParaTransferir: "Alias para transferir:", copiar: "Copiar", secNotas: "Notas / Instrucciones", placeholderNotas: "Ej: sin cebolla, alérgico al gluten...", confirmarPedido: "Confirmar pedido y enviar",
     detallePedido: "Detalle del pedido", repetirPedido: "🔄 Repetir este pedido", historialPedidos: "Historial de pedidos", agregarCarrito: "Agregar al carrito", preparandoPedido: "✨ ¡Preparando tu pedido! ✨",
-    redirigendoWhatsapp: "En unos segundos te llevaremos a WhatsApp para confirmar...", todosBtn: "🍽️ Todos", carritoVacio: "🛒 El carrito está vacío.", productoAgregado: "agregado", productoEliminado: "Producto eliminado",
+    redirigendoWhatsapp: "En unos segundos te llevaremos a WhatsApp para confirmar...", todosBtn: "🍸 Todos", carritoVacio: "🛒 El carrito está vacío.", productoAgregado: "agregado", productoEliminado: "Producto eliminado",
     sinPedidos: "No hay pedidos previos", agregarProductos: "Agrega productos", aliasCop: "Alias copiado", enviandoMsg: "⏳ Enviando...", pedidoEnviado: "✅ Pedido enviado. Abriendo WhatsApp...", errorEnvio: "Error al enviar el pedido. Intenta de nuevo.",
     nombreReq: "Por favor ingresa tu nombre", telefonoReq: "Ingresa un teléfono válido", mesaReq: "Indica el número de mesa", carritoVacioSend: "El carrito está vacío",
     fecha: "📅 Fecha", cliente: "👤 Cliente", telefono: "📞 Teléfono", ubicacion: "📍 Mesa", pago: "💳 Pago", aderezos: "🥫 Aderezos", sinAderezosExtra: "Sin aderezos extra", totalLabel: "Total", productosHeader: "🛍️ Productos"
   },
   en: {
     tagline: "Marvin Craft Destileria & Bar", btnUltimoPedido: "📋 Last order", btnMisPedidos: "📜 My orders", productosLabel: "items", verCarrito: "View cart", cargandoProductos: "Loading products...",
-    footerTagline: "Marvin Craft Destileria & Bar.", footerHorario: "Hours", footerLunesVier: "Tue – Fri: 12:00 – 00:00", footerSabDom: "Sat – Sun: 12:00 – 01:00", footerMesa: "🍽️ Order from your table",
+    footerTagline: "Marvin Craft Destileria & Bar.", footerHorario: "Hours", footerLunesVier: "Tue – Fri: 12:00 – 00:00", footerSabDom: "Sat – Sun: 12:00 – 01:00", footerMesa: "🍸 Order from your table",
     footerSeguinos: "Follow us", footerSeguro: "Order with confidence · Table service", tuCarrito: "Your cart", total: "Total", finalizarPedido: "Checkout",
     datosPedido: "Order from your table", secDatosCliente: "Customer info", labelNombre: "Full name *", placeholderNombre: "Ex: John Smith", labelTelefono: "Phone *", placeholderTelefono: "555 123 4567",
     secMesa: "Table location", labelMesa: "Table number *", placeholderMesa: "Ex: Table 5",
     secAderezos: "Extra sauces", opcional: "optional", secMetodoPago: "Payment method", efectivo: "Cash (at the venue)", transferencia: "Bank transfer",
     aliasParaTransferir: "Transfer alias:", copiar: "Copy", secNotas: "Notes / Instructions", placeholderNotas: "Ex: no onion, gluten allergy...", confirmarPedido: "Confirm & send order",
     detallePedido: "Order detail", repetirPedido: "🔄 Repeat this order", historialPedidos: "Order history", agregarCarrito: "Add to cart", preparandoPedido: "✨ Preparing your order! ✨",
-    redirigendoWhatsapp: "In a few seconds we'll open WhatsApp...", todosBtn: "🍽️ All", carritoVacio: "🛒 Your cart is empty.", productoAgregado: "added", productoEliminado: "Item removed",
+    redirigendoWhatsapp: "In a few seconds we'll open WhatsApp...", todosBtn: "🍸 All", carritoVacio: "🛒 Your cart is empty.", productoAgregado: "added", productoEliminado: "Item removed",
     sinPedidos: "No previous orders", agregarProductos: "Add items first", aliasCop: "Alias copied", enviandoMsg: "⏳ Sending...", pedidoEnviado: "✅ Order sent. Opening WhatsApp...", errorEnvio: "Error sending order. Please try again.",
     nombreReq: "Please enter your name", telefonoReq: "Enter a valid phone number", mesaReq: "Please indicate the table number", carritoVacioSend: "Your cart is empty",
     fecha: "📅 Date", cliente: "👤 Customer", telefono: "📞 Phone", ubicacion: "📍 Table", pago: "💳 Payment", aderezos: "🥫 Sauces", sinAderezosExtra: "No extra sauces", totalLabel: "Total", productosHeader: "🛍️ Products"
@@ -150,9 +150,9 @@ function cargarYMostrarNotificaciones() {
   let notificacionesArray = Array.from(notificacionesSet);
   if (notificacionesArray.length === 0) {
     if (currentLang === "es") {
-      notificacionesArray = ["📞 WhatsApp: 3875048697", "🕒 Mar a Dom 12 a 00hs", "🍽️ Servicio en mesa"];
+      notificacionesArray = ["📞 WhatsApp: 3875048697", "🕒 Mar a Dom 12 a 00hs", "🍸 Servicio en mesa"];
     } else {
-      notificacionesArray = ["📞 WhatsApp: 3875048697", "🕒 Tue to Sun 12pm to 12am", "🍽️ Table service"];
+      notificacionesArray = ["📞 WhatsApp: 3875048697", "🕒 Tue to Sun 12pm to 12am", "🍸 Table service"];
     }
   }
   const notificacionesDuplicadas = [...notificacionesArray, ...notificacionesArray];
@@ -294,7 +294,7 @@ function mostrarDetallePedido(pedido, permitirRepetir = true) {
   let pHtml = '<ul class="pedido-productos">';
   pedido.productos.forEach(p => { pHtml += `<li><span>${escapeHtml(p.nombre)} x${p.cantidad}</span><span>$${(p.precio * p.cantidad).toFixed(2)}</span></li>`; });
   pHtml += '</ul>';
-  let locStr = `🍽️ ${t("enLocal")}: ${pedido.mesa}`;
+  let locStr = `🍸 ${t("enLocal")}: ${pedido.mesa}`;
   let pagoStr = "";
   if (pedido.pago === "transferencia") pagoStr = `🏦 ${t("transferencia")} (Alias: ${ALIAS_TRANSFERENCIA})`;
   else pagoStr = `💵 ${t("efectivo")}`;
@@ -319,7 +319,7 @@ function mostrarHistorialCompleto() {
   c.innerHTML = pedidos.map((ped, idx) => `<div class="order-card" data-index="${idx}">
     <h4>📅 ${ped.fecha}</h4>
     <p>💰 ${t("totalLabel")}: $${ped.total.toFixed(2)} · 🧾 ${ped.productos.length} ${t("productosLabel")}</p>
-    <p>${t("enLocal")} · ${ped.pago === "transferencia" ? t("transferencia") : t("efectivo")}</p>
+    <p>🍸 ${t("enLocal")} · ${ped.pago === "transferencia" ? t("transferencia") : t("efectivo")}</p>
   </div>`).join("");
   c.querySelectorAll(".order-card").forEach(card => { card.addEventListener("click", () => { mostrarDetallePedido(pedidos[card.dataset.index], true); document.getElementById("allOrdersModal").classList.remove("active"); }); });
   document.getElementById("allOrdersModal").classList.add("active");
@@ -343,7 +343,7 @@ async function finalizarPedido(clienteData, mesa, aderezosSeleccionados, metodoP
   catch (err) { console.error(err); showToast(t("errorEnvio")); showLoading(false); return false; }
   let adStr = aderezosSeleccionados.length ? `🥫 Aderezos: ${aderezosSeleccionados.join(", ")}` : "🥫 Sin aderezos extra";
   let pagoStr = metodoPago === "transferencia" ? `🏦 Transferencia (Alias: ${ALIAS_TRANSFERENCIA})` : "💵 Efectivo";
-  let msg = `🍽️ *NUEVO PEDIDO - MARVIN*%0A📅 ${fechaHora}%0A👤 ${clienteData.nombre}%0A📞 ${clienteData.telefono}%0A📍 Mesa: ${mesa}%0A${adStr}%0A${pagoStr}%0A────────────────%0A`;
+  let msg = `🍸 *NUEVO PEDIDO - MARVIN*%0A📅 ${fechaHora}%0A👤 ${clienteData.nombre}%0A📞 ${clienteData.telefono}%0A📍 Mesa: ${mesa}%0A${adStr}%0A${pagoStr}%0A────────────────%0A`;
   carrito.forEach(i => { msg += `• ${i.nombre} x${i.cantidad} = $${(i.precio * i.cantidad).toFixed(2)}%0A`; });
   msg += `────────────────%0A💰 *Total: $${total.toFixed(2)}*%0A📝 Notas: ${notas || "Ninguna"}%0A✅ ¡Gracias!`;
   const pedidoGuardado = { fecha: fechaHora, cliente: clienteData.nombre, telefono: clienteData.telefono, tipo: "local", mesa: mesa, aderezos: aderezosSeleccionados, pago: metodoPago, notas: notas, productos: carrito.map(i => ({ id: i.id, nombre: i.nombre, precio: i.precio, cantidad: i.cantidad })), total: total };
