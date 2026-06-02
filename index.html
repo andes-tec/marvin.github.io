@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Marvin · Pedidos en tu mesa</title>
-    <meta name="description" content="Pedí desde tu mesa en Marvin · Comida de autor con estilo único.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+    <meta name="description" content="Pedí desde tu mesa en Marvin · Coctelería de autor con estilo único.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍸</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -73,7 +73,7 @@
         <h4 class="footer-title" data-i18n="footerHorario">Horarios</h4>
         <p data-i18n="footerLunesVier">Mar – Vie: 12:00 – 00:00</p>
         <p data-i18n="footerSabDom">Sáb – Dom: 12:00 – 01:00</p>
-        <p class="footer-delivery" data-i18n="footerMesa">🍽️ Pedí desde tu mesa</p>
+        <p class="footer-delivery" data-i18n="footerMesa">🍸 Pedí desde tu mesa</p>
       </div>
       <div class="footer-col">
         <h4 class="footer-title" data-i18n="footerSeguinos">Seguinos</h4>
@@ -95,7 +95,7 @@
     </div>
     <div class="footer-bottom">
       <p>🔥 <span data-i18n="footerSeguro">Pedí con confianza · Servicio en mesa</span></p>
-      <p><small>Marvin · By Andes-Tec · 2026</small></p>
+      <p><small>Marvin · By <a href="https://andes-tec.github.io/andestec.github.io/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none;">AndesTec</a> 2026</small></p>
     </div>
   </footer>
 </div>
@@ -138,7 +138,7 @@
 <div id="checkoutModal" class="modal">
   <div class="modal-content checkout-modal dark-modal">
     <div class="modal-header">
-      <h2>🍽️ <span data-i18n="datosPedido">Pedido desde tu mesa</span></h2>
+      <h2>🍸 <span data-i18n="datosPedido">Pedido desde tu mesa</span></h2>
       <button class="close-modal" id="closeCheckoutModalBtn">&times;</button>
     </div>
     <form id="checkoutForm" novalidate>
@@ -197,7 +197,10 @@
 <button id="floatingCartBtn" class="floating-cart-btn" aria-label="Ver carrito">🛒 <span id="floatingCartCount">0</span></button>
 <div id="loadingOverlay" class="loading-overlay" style="display:none;">
   <div class="loading-content">
-    <div class="creative-spinner"><span class="sandwich-emoji">🍽️</span><div class="dot-wave"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+    <div class="creative-spinner">
+      <img src="logoMarvin.png" alt="Marvin" class="spinner-logo">
+      <div class="dot-wave"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>
     <p class="loading-title" data-i18n="preparandoPedido">✨ ¡Preparando tu pedido! ✨</p>
     <p class="loading-message" data-i18n="redirigendoWhatsapp">En unos segundos te llevaremos a WhatsApp para confirmar...</p>
     <div class="loading-progress"><div class="progress-bar"></div></div>
