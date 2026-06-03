@@ -1,5 +1,5 @@
 const PRODUCTOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_p_7vJVWA2BQAO1j6YINDABe2lfhHSSKJDaJui9DMmld_UFhD26gKWZdIuhJa1VIYrBUbbfmUJ5jI/pub?gid=0&single=true&output=csv";
-const APPS_SCRIPT_PEDIDOS_URL = "https://script.google.com/macros/s/AKfycbxKHjptEll_39WW41GX48V3l1hCh3dzHcMbPQfgtvEIOQmvvq2KVEV0llYE9lQhYBje/exec";
+const APPS_SCRIPT_PEDIDOS_URL = "https://script.google.com/macros/s/AKfycbzttnf55ecSq_6vHIdqvyY01TKClgjSdiIRa7y-i5YcKXFIa8Wqm7qkgqBebK0NwQdQ/exec";
 const WHATSAPP_NUMBER = "5493875048697";
 const ADEREZOS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_p_7vJVWA2BQAO1j6YINDABe2lfhHSSKJDaJui9DMmld_UFhD26gKWZdIuhJa1VIYrBUbbfmUJ5jI/pub?gid=248250282&single=true&output=csv";
 const ALIAS_TRANSFERENCIA = "marvin.craft.ok";
@@ -10,6 +10,47 @@ let isAllOrdersModalOpen = false;
 let currentProductDetailId = null;
 
 const productDescTranslations = {};
+// --- SPLASH SCREEN: control de animación y revelado del contenido ---
+document.addEventListener('DOMContentLoaded', function() {
+    const splash = document.getElementById('splashScreen');
+    const mainContent = document.getElementById('mainContent');
+    
+    // Fijar estilo inicial del contenido (invisible, pero se mostrará después del splash)
+    if (mainContent) {
+        mainContent.style.opacity = '1';
+        mainContent.style.visibility = 'visible';
+    }
+    
+    // Escuchar el final de la animación del splash
+    const logoWrapper = document.querySelector('.splash-logo-wrapper');
+    if (logoWrapper) {
+        logoWrapper.addEventListener('animationend', function() {
+            // Desvanecer el splash completamente
+            if (splash) {
+                splash.style.opacity = '100';
+                splash.style.visibility = 'hidden';
+                splash.style.transition = 'opacity 0.8s ease';
+                setTimeout(() => {
+                    splash.remove(); // Eliminar del DOM para liberar recursos
+                }, 3500);
+            }
+            // Mostrar el contenido principal con una transición suave
+            if (mainContent) {
+                mainContent.style.opacity = '1';
+            }
+        });
+    }
+    
+    // Fallback por si la animación no se dispara (por ejemplo, navegadores muy lentos)
+    setTimeout(() => {
+        if (splash && splash.style.visibility !== 'hidden') {
+            splash.style.opacity = '0';
+            splash.style.visibility = 'hidden';
+            if (mainContent) mainContent.style.opacity = '1';
+            setTimeout(() => splash.remove(), 600);
+        }
+    }, 3000);
+});
 
 function getProductDescription(prod) {
   if (currentLang === "es") return prod.descripcion || "";
@@ -337,23 +378,64 @@ async function finalizarPedido(clienteData, mesa, aderezosSeleccionados, metodoP
   const total = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
   const productosTexto = carrito.map(i => `${i.nombre} x${i.cantidad} = $${(i.precio * i.cantidad).toFixed(2)}`).join(" | ");
   const fechaHora = getFormattedDateTime();
+  
+  // Mostrar pantalla de carga con logo giratorio
   showLoading(true);
-  const orderData = { fecha_hora: fechaHora, cliente_nombre: clienteData.nombre, cliente_telefono: clienteData.telefono, tipo_pedido: "local", ubicacion: `Mesa ${mesa}`, aderezos: aderezosSeleccionados.join(", "), metodo_pago: metodoPago, notas: notas, productos: productosTexto, total: total.toFixed(2), estado: "Pendiente" };
-  try { await fetch(APPS_SCRIPT_PEDIDOS_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(orderData) }); }
-  catch (err) { console.error(err); showToast(t("errorEnvio")); showLoading(false); return false; }
+  
+  // Preparar datos para enviar
+  const formData = new URLSearchParams();
+  formData.append('fecha_hora', fechaHora);
+  formData.append('cliente_nombre', clienteData.nombre);
+  formData.append('cliente_telefono', clienteData.telefono);
+  formData.append('tipo_pedido', 'local');
+  formData.append('ubicacion', `Mesa ${mesa}`);
+  formData.append('aderezos', aderezosSeleccionados.join(', '));
+  formData.append('metodo_pago', metodoPago);
+  formData.append('notas', notas);
+  formData.append('productos', productosTexto);
+  formData.append('total', total.toFixed(2));
+  formData.append('estado', 'Pendiente');
+  
+  // Usamos navigator.sendBeacon que no provoca CORS ni errores en consola
+  const beaconSent = navigator.sendBeacon(APPS_SCRIPT_PEDIDOS_URL, formData);
+  
+  if (!beaconSent) {
+    // Fallback: fetch con keepalive (silencioso)
+    try {
+      await fetch(APPS_SCRIPT_PEDIDOS_URL, {
+        method: 'POST',
+        body: formData,
+        keepalive: true
+      });
+    } catch (e) {
+      console.warn("Error enviando pedido (no crítico):", e);
+    }
+  }
+  
+  // Pequeña pausa para asegurar el envío
+  await new Promise(resolve => setTimeout(resolve, 2500));
+  
+  // Ocultar pantalla de carga
+  showLoading(false);
+  
+  // Resto del flujo (WhatsApp, historial, limpiar carrito)
   let adStr = aderezosSeleccionados.length ? `🥫 Aderezos: ${aderezosSeleccionados.join(", ")}` : "🥫 Sin aderezos extra";
   let pagoStr = metodoPago === "transferencia" ? `🏦 Transferencia (Alias: ${ALIAS_TRANSFERENCIA})` : "💵 Efectivo";
   let msg = `🍸 *NUEVO PEDIDO - MARVIN*%0A📅 ${fechaHora}%0A👤 ${clienteData.nombre}%0A📞 ${clienteData.telefono}%0A📍 Mesa: ${mesa}%0A${adStr}%0A${pagoStr}%0A────────────────%0A`;
   carrito.forEach(i => { msg += `• ${i.nombre} x${i.cantidad} = $${(i.precio * i.cantidad).toFixed(2)}%0A`; });
   msg += `────────────────%0A💰 *Total: $${total.toFixed(2)}*%0A📝 Notas: ${notas || "Ninguna"}%0A✅ ¡Gracias!`;
+  
   const pedidoGuardado = { fecha: fechaHora, cliente: clienteData.nombre, telefono: clienteData.telefono, tipo: "local", mesa: mesa, aderezos: aderezosSeleccionados, pago: metodoPago, notas: notas, productos: carrito.map(i => ({ id: i.id, nombre: i.nombre, precio: i.precio, cantidad: i.cantidad })), total: total };
   guardarPedidoEnHistorial(pedidoGuardado);
-  carrito = []; updateCartUI(); showLoading(false); window.scrollTo({ top: 0, behavior: "smooth" }); showToast(t("pedidoEnviado"));
+  carrito = []; updateCartUI();
+  
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
   const w = window.open(url, "_blank");
   if (!w || w.closed || typeof w.closed === "undefined") {
     setTimeout(() => { const toast = document.getElementById("toastMessage"); if (toast) { toast.innerHTML = `⚠️ El navegador bloqueó la ventana. <a href="${url}" target="_blank" style="color:#F5C542;text-decoration:underline">Abrir WhatsApp</a>`; setTimeout(() => { toast.innerHTML = "✅ Pedido enviado. ¡Gracias!"; }, 8000); } }, 500);
   }
+  showToast(t("pedidoEnviado"));
+  window.scrollTo({ top: 0, behavior: "smooth" });
   return true;
 }
 
