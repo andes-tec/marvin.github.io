@@ -274,7 +274,7 @@ body {
     .cat-btn { white-space: normal; }
 }
 
-/* PRODUCTOS - TARJETAS ANIMADAS ESPECTACULARES */
+/* PRODUCTOS */
 .products-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -310,7 +310,6 @@ body {
     border-color: var(--primary);
     box-shadow: 0 12px 28px rgba(233,27,42,0.4), 0 0 0 1px rgba(233,27,42,0.2);
 }
-/* Efecto de borde gradiente animado al hover */
 .product-card::before {
     content: '';
     position: absolute;
@@ -518,7 +517,7 @@ body {
     100% { width: 100%; }
 }
 
-/* MODALES Y RESTO (sin cambios de tamaño ni funcionalidad) */
+/* MODALES Y RESTO */
 .loading {
     text-align: center;
     padding: 3rem;
@@ -1066,4 +1065,76 @@ body {
     .dark-modal .form-section {
         padding: 1rem;
     }
+}
+
+/* SPLASH SCREEN CORREGIDO – logo nítido al inicio, luego gira y se difumina */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('fondo.jpg') center/cover no-repeat fixed;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Sin backdrop-filter para que el logo se vea nítido */
+}
+
+.splash-screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: -1;
+}
+
+.splash-logo-wrapper {
+    text-align: center;
+    animation: splashAnim 2.4s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+}
+
+.splash-logo {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--accent-gold);
+    box-shadow: 0 0 30px rgba(233,27,42,0.8);
+    /* Inicia nítido sin blur */
+}
+
+@keyframes splashAnim {
+    0% {
+        transform: rotate(0deg) scale(0.9);
+        opacity: 1;
+        filter: blur(0px);
+    }
+    20% {
+        transform: rotate(90deg) scale(1);
+        filter: blur(0px);
+    }
+    50% {
+        transform: rotate(270deg) scale(1.2);
+        filter: blur(1px);
+        opacity: 1;
+    }
+    80% {
+        transform: rotate(540deg) scale(1.5);
+        filter: blur(5px);
+        opacity: 0.5;
+    }
+    100% {
+        transform: rotate(720deg) scale(2);
+        filter: blur(10px);
+        opacity: 1;
+        visibility: hidden;
+    }
+}
+
+/* Ocultar splash al terminar la animación */
+.splash-screen.fade-out {
+    opacity: 1;
+    visibility: hidden;
 }
