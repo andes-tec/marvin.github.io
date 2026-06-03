@@ -10,201 +10,209 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container">
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="header-overlay"></div>
-    <div class="header-content">
-      <div class="logo-area">
-        <img src="logoMarvin.png" alt="Marvin Logo" class="logo-img">
-        <div class="brand-text">
-          <h1>Marvin<span class="dot">.</span></h1>
-          <p class="tagline" data-i18n="tagline">Marvin Craft Destileria & Bar</p>
-        </div>
-        <div class="header-actions">
-          <button id="langToggleBtn" class="lang-toggle" title="Cambiar idioma">
-            <span class="lang-opt" id="langES">ES</span>
-            <span class="lang-sep">|</span>
-            <span class="lang-opt" id="langEN">EN</span>
-          </button>
-          <button id="lastOrderBtn" class="btn-last-order" style="display:none;" data-i18n="btnUltimoPedido">📋 Último pedido</button>
-          <button id="allOrdersBtn"  class="btn-last-order" style="display:none;" data-i18n="btnMisPedidos">📜 Mis pedidos</button>
-        </div>
-      </div>
+<!-- SPLASH SCREEN (pantalla de bienvenida con animación del logo) -->
+<div id="splashScreen" class="splash-screen">
+    <div class="splash-logo-wrapper">
+        <img src="logoMarvin.png" alt="Marvin" class="splash-logo">
     </div>
-  </header>
-
-  <!-- BARRA INFORMATIVA -->
-  <div class="info-bar-container">
-    <div class="info-bar-track" id="infoBarTrack"></div>
-  </div>
-
-  <!-- TOOLBAR -->
-  <div class="toolbar">
-    <div class="cart-summary">
-      🛒 <span id="cartCount">0</span> <span data-i18n="productosLabel">productos</span> · <strong id="cartTotal">$0</strong>
-    </div>
-    <button id="viewCartBtn" class="btn-outline" data-i18n="verCarrito">Ver carrito</button>
-  </div>
-
-  <!-- CATEGORÍAS -->
-  <div class="categories-wrapper">
-    <div class="categories-filter" id="categoriesContainer"></div>
-  </div>
-
-  <!-- GRID PRODUCTOS -->
-  <div id="productsContainer" class="products-grid">
-    <div class="loading">⏳ <span data-i18n="cargandoProductos">Cargando productos...</span></div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <div class="footer-brand">
-          <img src="logoMarvin.png" alt="Marvin" class="footer-logo">
-          <span class="footer-name">Marvin<span class="dot">.</span></span>
-        </div>
-        <p class="footer-tagline" data-i18n="footerTagline">Marvin Craft Destileria & Bar.</p>
-        <p class="footer-phone">📞 +54 9 387 504-8697</p>
-      </div>
-      <div class="footer-col">
-        <h4 class="footer-title" data-i18n="footerHorario">Horarios</h4>
-        <p data-i18n="footerLunesVier">Mar – Vie: 12:00 – 00:00</p>
-        <p data-i18n="footerSabDom">Sáb – Dom: 12:00 – 01:00</p>
-        <p class="footer-delivery" data-i18n="footerMesa">🍸 Pedí desde tu mesa</p>
-      </div>
-      <div class="footer-col">
-        <h4 class="footer-title" data-i18n="footerSeguinos">Seguinos</h4>
-        <div class="social-links">
-          <a href="https://wa.me/5493875048697" target="_blank" rel="noopener" class="social-btn whatsapp">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp
-          </a>
-          <a href="https://instagram.com/marvin.craft.ok" target="_blank" rel="noopener" class="social-btn instagram">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            Instagram
-          </a>
-          <a href="#" target="_blank" rel="noopener" class="social-btn facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            Facebook
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>🔥 <span data-i18n="footerSeguro">Pedí con confianza · Servicio en mesa</span></p>
-      <p><small>Marvin · By <a href="https://andes-tec.github.io/andestec.github.io/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none;">AndesTec</a> 2026</small></p>
-    </div>
-  </footer>
 </div>
 
-<!-- MODALES -->
+<div class="container" id="mainContent" style="opacity: 0; transition: opacity 0.5s ease;">
+    <!-- Todo el contenido existente de la carta digital -->
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-overlay"></div>
+        <div class="header-content">
+            <div class="logo-area">
+                <img src="logoMarvin.png" alt="Marvin Logo" class="logo-img">
+                <div class="brand-text">
+                    <h1>Marvin<span class="dot">.</span></h1>
+                    <p class="tagline" data-i18n="tagline">Marvin Craft Destileria & Bar</p>
+                </div>
+                <div class="header-actions">
+                    <button id="langToggleBtn" class="lang-toggle" title="Cambiar idioma">
+                        <span class="lang-opt" id="langES">ES</span>
+                        <span class="lang-sep">|</span>
+                        <span class="lang-opt" id="langEN">EN</span>
+                    </button>
+                    <button id="lastOrderBtn" class="btn-last-order" style="display:none;" data-i18n="btnUltimoPedido">📋 Último pedido</button>
+                    <button id="allOrdersBtn"  class="btn-last-order" style="display:none;" data-i18n="btnMisPedidos">📜 Mis pedidos</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- BARRA INFORMATIVA -->
+    <div class="info-bar-container">
+        <div class="info-bar-track" id="infoBarTrack"></div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+        <div class="cart-summary">
+            🛒 <span id="cartCount">0</span> <span data-i18n="productosLabel">productos</span> · <strong id="cartTotal">$0</strong>
+        </div>
+        <button id="viewCartBtn" class="btn-outline" data-i18n="verCarrito">Ver carrito</button>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <div class="categories-wrapper">
+        <div class="categories-filter" id="categoriesContainer"></div>
+    </div>
+
+    <!-- GRID PRODUCTOS -->
+    <div id="productsContainer" class="products-grid">
+        <div class="loading">⏳ <span data-i18n="cargandoProductos">Cargando productos...</span></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-brand">
+                    <img src="logoMarvin.png" alt="Marvin" class="footer-logo">
+                    <span class="footer-name">Marvin<span class="dot">.</span></span>
+                </div>
+                <p class="footer-tagline" data-i18n="footerTagline">Marvin Craft Destileria & Bar.</p>
+                <p class="footer-phone">📞 +54 9 387 504-8697</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title" data-i18n="footerHorario">Horarios</h4>
+                <p data-i18n="footerLunesVier">Mar – Vie: 12:00 – 00:00</p>
+                <p data-i18n="footerSabDom">Sáb – Dom: 12:00 – 01:00</p>
+                <p class="footer-delivery" data-i18n="footerMesa">🍸 Pedí desde tu mesa</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-title" data-i18n="footerSeguinos">Seguinos</h4>
+                <div class="social-links">
+                    <a href="https://wa.me/5493875048697" target="_blank" rel="noopener" class="social-btn whatsapp">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        WhatsApp
+                    </a>
+                    <a href="https://instagram.com/marvin.craft.ok" target="_blank" rel="noopener" class="social-btn instagram">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        Instagram
+                    </a>
+                    <a href="#" target="_blank" rel="noopener" class="social-btn facebook">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Facebook
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>🔥 <span data-i18n="footerSeguro">Pedí con confianza · Servicio en mesa</span></p>
+            <p><small>Marvin · By <a href="https://andes-tec.github.io/andestec.github.io/" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none;">AndesTec</a> 2026</small></p>
+        </div>
+    </footer>
+</div>
+
+<!-- MODALES (se mantienen igual) -->
 <div id="productDetailModal" class="modal">
-  <div class="modal-content product-detail-modal">
-    <button class="close-modal" id="closeProductDetailBtn">&times;</button>
-    <div class="product-detail-img-wrap">
-      <img id="pdImg" src="" alt="" class="product-detail-img">
-      <div class="product-detail-badge" id="pdCategoria"></div>
+    <div class="modal-content product-detail-modal">
+        <button class="close-modal" id="closeProductDetailBtn">&times;</button>
+        <div class="product-detail-img-wrap">
+            <img id="pdImg" src="" alt="" class="product-detail-img">
+            <div class="product-detail-badge" id="pdCategoria"></div>
+        </div>
+        <div class="product-detail-body">
+            <h2 id="pdNombre" class="product-detail-name"></h2>
+            <p id="pdDesc" class="product-detail-desc"></p>
+            <div class="product-detail-footer">
+                <span id="pdPrecio" class="product-detail-price"></span>
+                <button id="pdAddBtn" class="btn-add-detail" data-id="">
+                    🛒 <span data-i18n="agregarCarrito">Agregar al carrito</span>
+                </button>
+            </div>
+        </div>
     </div>
-    <div class="product-detail-body">
-      <h2 id="pdNombre" class="product-detail-name"></h2>
-      <p id="pdDesc" class="product-detail-desc"></p>
-      <div class="product-detail-footer">
-        <span id="pdPrecio" class="product-detail-price"></span>
-        <button id="pdAddBtn" class="btn-add-detail" data-id="">
-          🛒 <span data-i18n="agregarCarrito">Agregar al carrito</span>
-        </button>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div id="cartModal" class="modal">
-  <div class="modal-content cart-modal">
-    <div class="modal-header">
-      <h2>🛒 <span data-i18n="tuCarrito">Tu carrito</span></h2>
-      <button class="close-modal" id="closeCartModalBtn">&times;</button>
+    <div class="modal-content cart-modal">
+        <div class="modal-header">
+            <h2>🛒 <span data-i18n="tuCarrito">Tu carrito</span></h2>
+            <button class="close-modal" id="closeCartModalBtn">&times;</button>
+        </div>
+        <div id="cartItemsList" class="cart-items-list"></div>
+        <div class="cart-footer">
+            <div class="cart-total"><span data-i18n="total">Total</span>: <strong id="modalCartTotal">$0</strong></div>
+            <button id="checkoutBtn" class="btn-primary" data-i18n="finalizarPedido">Finalizar pedido</button>
+        </div>
     </div>
-    <div id="cartItemsList" class="cart-items-list"></div>
-    <div class="cart-footer">
-      <div class="cart-total"><span data-i18n="total">Total</span>: <strong id="modalCartTotal">$0</strong></div>
-      <button id="checkoutBtn" class="btn-primary" data-i18n="finalizarPedido">Finalizar pedido</button>
-    </div>
-  </div>
 </div>
 
 <div id="checkoutModal" class="modal">
-  <div class="modal-content checkout-modal dark-modal">
-    <div class="modal-header">
-      <h2>🍸 <span data-i18n="datosPedido">Pedido desde tu mesa</span></h2>
-      <button class="close-modal" id="closeCheckoutModalBtn">&times;</button>
+    <div class="modal-content checkout-modal dark-modal">
+        <div class="modal-header">
+            <h2>🍸 <span data-i18n="datosPedido">Pedido desde tu mesa</span></h2>
+            <button class="close-modal" id="closeCheckoutModalBtn">&times;</button>
+        </div>
+        <form id="checkoutForm" novalidate>
+            <div class="form-section">
+                <div class="form-section-title"><span>👤</span> <span data-i18n="secDatosCliente">Datos del cliente</span></div>
+                <div class="form-row">
+                    <div class="form-group"><label data-i18n="labelNombre">Nombre completo *</label><input type="text" id="customerName" required><span class="field-error" id="errorNombre"></span></div>
+                    <div class="form-group"><label data-i18n="labelTelefono">Teléfono *</label><input type="tel" id="customerPhone" required><span class="field-error" id="errorTelefono"></span></div>
+                </div>
+            </div>
+            <div class="form-section">
+                <div class="form-section-title"><span>📍</span> <span data-i18n="secMesa">Ubicación en el local</span></div>
+                <div class="form-group" id="mesaGroup">
+                    <label data-i18n="labelMesa">Número de mesa *</label>
+                    <input type="text" id="mesaNumber" placeholder="Ej: Mesa 5" required>
+                    <span class="field-error" id="errorMesa"></span>
+                </div>
+            </div>
+            <div class="form-section" id="aderezosGroup">
+                <div class="form-section-title"><span>🥫</span> <span data-i18n="secAderezos">Aderezos adicionales</span> <span class="form-section-badge" data-i18n="opcional">opcional</span></div>
+                <div id="aderezosCheckboxes" class="chips-group"></div>
+            </div>
+            <div class="form-section">
+                <div class="form-section-title"><span>💳</span> <span data-i18n="secMetodoPago">Método de pago</span></div>
+                <div class="radio-card-group" id="pagoGroup">
+                    <label class="radio-card"><input type="radio" name="pago" value="efectivo" checked><span class="radio-card-content"><span>💵</span><span data-i18n="efectivo">Efectivo (en el local)</span></span></label>
+                    <label class="radio-card"><input type="radio" name="pago" value="transferencia"><span class="radio-card-content"><span>🏦</span><span data-i18n="transferencia">Transferencia bancaria</span></span></label>
+                </div>
+                <div id="aliasInfo" class="alias-info" style="display:none;"><p>📲 <strong data-i18n="aliasParaTransferir">Alias para transferir:</strong> <span id="aliasText">marvin.craft.ok</span> <button type="button" id="copyAliasBtn" class="btn-copy" data-i18n="copiar">Copiar</button></p></div>
+            </div>
+            <div class="form-section">
+                <div class="form-section-title"><span>📝</span> <span data-i18n="secNotas">Notas / Instrucciones</span> <span class="form-section-badge" data-i18n="opcional">opcional</span></div>
+                <textarea id="orderNotes" rows="2" placeholder="Ej: sin cebolla, alérgico al gluten, etc."></textarea>
+            </div>
+            <button type="submit" class="btn-primary btn-submit" id="submitOrderBtn">✅ <span data-i18n="confirmarPedido">Confirmar pedido y enviar</span></button>
+        </form>
     </div>
-    <form id="checkoutForm" novalidate>
-      <div class="form-section">
-        <div class="form-section-title"><span>👤</span> <span data-i18n="secDatosCliente">Datos del cliente</span></div>
-        <div class="form-row">
-          <div class="form-group"><label data-i18n="labelNombre">Nombre completo *</label><input type="text" id="customerName" required><span class="field-error" id="errorNombre"></span></div>
-          <div class="form-group"><label data-i18n="labelTelefono">Teléfono *</label><input type="tel" id="customerPhone" required><span class="field-error" id="errorTelefono"></span></div>
-        </div>
-      </div>
-      <div class="form-section">
-        <div class="form-section-title"><span>📍</span> <span data-i18n="secMesa">Ubicación en el local</span></div>
-        <div class="form-group" id="mesaGroup">
-          <label data-i18n="labelMesa">Número de mesa *</label>
-          <input type="text" id="mesaNumber" placeholder="Ej: Mesa 5" required>
-          <span class="field-error" id="errorMesa"></span>
-        </div>
-      </div>
-      <div class="form-section" id="aderezosGroup">
-        <div class="form-section-title"><span>🥫</span> <span data-i18n="secAderezos">Aderezos adicionales</span> <span class="form-section-badge" data-i18n="opcional">opcional</span></div>
-        <div id="aderezosCheckboxes" class="chips-group"></div>
-      </div>
-      <div class="form-section">
-        <div class="form-section-title"><span>💳</span> <span data-i18n="secMetodoPago">Método de pago</span></div>
-        <div class="radio-card-group" id="pagoGroup">
-          <label class="radio-card"><input type="radio" name="pago" value="efectivo" checked><span class="radio-card-content"><span>💵</span><span data-i18n="efectivo">Efectivo (en el local)</span></span></label>
-          <label class="radio-card"><input type="radio" name="pago" value="transferencia"><span class="radio-card-content"><span>🏦</span><span data-i18n="transferencia">Transferencia bancaria</span></span></label>
-        </div>
-        <div id="aliasInfo" class="alias-info" style="display:none;"><p>📲 <strong data-i18n="aliasParaTransferir">Alias para transferir:</strong> <span id="aliasText">marvin.craft.ok</span> <button type="button" id="copyAliasBtn" class="btn-copy" data-i18n="copiar">Copiar</button></p></div>
-      </div>
-      <div class="form-section">
-        <div class="form-section-title"><span>📝</span> <span data-i18n="secNotas">Notas / Instrucciones</span> <span class="form-section-badge" data-i18n="opcional">opcional</span></div>
-        <textarea id="orderNotes" rows="2" placeholder="Ej: sin cebolla, alérgico al gluten, etc."></textarea>
-      </div>
-      <button type="submit" class="btn-primary btn-submit" id="submitOrderBtn">✅ <span data-i18n="confirmarPedido">Confirmar pedido y enviar</span></button>
-    </form>
-  </div>
 </div>
 
 <div id="orderDetailModal" class="modal">
-  <div class="modal-content order-detail-modal">
-    <div class="modal-header"><h2>📄 <span data-i18n="detallePedido">Detalle del pedido</span></h2><button class="close-modal" id="closeOrderDetailBtn">&times;</button></div>
-    <div id="orderDetailContent" class="last-order-content"></div>
-    <div class="last-order-footer"><button id="reorderFromDetailBtn" class="btn-primary" data-i18n="repetirPedido">🔄 Repetir este pedido</button></div>
-  </div>
+    <div class="modal-content order-detail-modal">
+        <div class="modal-header"><h2>📄 <span data-i18n="detallePedido">Detalle del pedido</span></h2><button class="close-modal" id="closeOrderDetailBtn">&times;</button></div>
+        <div id="orderDetailContent" class="last-order-content"></div>
+        <div class="last-order-footer"><button id="reorderFromDetailBtn" class="btn-primary" data-i18n="repetirPedido">🔄 Repetir este pedido</button></div>
+    </div>
 </div>
 
 <div id="allOrdersModal" class="modal">
-  <div class="modal-content all-orders-modal">
-    <div class="modal-header"><h2>📜 <span data-i18n="historialPedidos">Historial de pedidos</span></h2><button class="close-modal" id="closeAllOrdersBtn">&times;</button></div>
-    <div id="ordersList" class="orders-list"></div>
-  </div>
+    <div class="modal-content all-orders-modal">
+        <div class="modal-header"><h2>📜 <span data-i18n="historialPedidos">Historial de pedidos</span></h2><button class="close-modal" id="closeAllOrdersBtn">&times;</button></div>
+        <div id="ordersList" class="orders-list"></div>
+    </div>
 </div>
 
 <div id="toastMessage" class="toast"></div>
 <button id="floatingCartBtn" class="floating-cart-btn" aria-label="Ver carrito">🛒 <span id="floatingCartCount">0</span></button>
 <div id="loadingOverlay" class="loading-overlay" style="display:none;">
-  <div class="loading-content">
-    <div class="creative-spinner">
-      <img src="logoMarvin.png" alt="Marvin" class="spinner-logo">
-      <div class="dot-wave"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="loading-content">
+        <div class="creative-spinner">
+            <img src="logoMarvin.png" alt="Marvin" class="spinner-logo">
+            <div class="dot-wave"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <p class="loading-title" data-i18n="preparandoPedido">✨ ¡Preparando tu pedido! ✨</p>
+        <p class="loading-message" data-i18n="redirigendoWhatsapp">En unos segundos te llevaremos a WhatsApp para confirmar...</p>
+        <div class="loading-progress"><div class="progress-bar"></div></div>
     </div>
-    <p class="loading-title" data-i18n="preparandoPedido">✨ ¡Preparando tu pedido! ✨</p>
-    <p class="loading-message" data-i18n="redirigendoWhatsapp">En unos segundos te llevaremos a WhatsApp para confirmar...</p>
-    <div class="loading-progress"><div class="progress-bar"></div></div>
-  </div>
 </div>
 
 <script src="script.js"></script>
